@@ -1,13 +1,12 @@
 
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 function BuscaUsuario() {
   const [nomeUsuario, setNomeUsuario] = useState('');
   const [dadosUsuario, setDadosUsuario] = useState(null);
   const [erro, setErro] = useState(null);
   const [carregando, setCarregando] = useState(false);
-  const [ordem, setOrdem] = useState('estrelas'); // Estado para armazenar a ordem de classificação
 
   const handleChange = (evento) => {
     setNomeUsuario(evento.target.value);
@@ -32,10 +31,7 @@ function BuscaUsuario() {
         throw new Error('Erro ao buscar repositórios do usuário');
       }
       const repositoriosData = await repositoriosResponse.json();
-
-      // Ordenar os repositórios de acordo com a opção selecionada
-      const repositoriosOrdenados = ordenarRepositorios(repositoriosData, ordem);
-      usuarioData.repositorios = repositoriosOrdenados;
+      usuarioData.repositorios = repositoriosData;
 
     } catch (error) {
       console.error(error);
@@ -44,24 +40,6 @@ function BuscaUsuario() {
     } finally {
       setCarregando(false);
     }
-  };
-
-  // Função para ordenar os repositórios com base na opção selecionada
-  const ordenarRepositorios = (repositorios, ordem) => {
-    if (ordem === 'estrelas') {
-      return repositorios.sort((a, b) => b.stargazers_count - a.stargazers_count);
-    } else if (ordem === 'nome') {
-      return repositorios.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (ordem === 'linguagem') {
-      return repositorios.sort((a, b) => (a.language || '').localeCompare(b.language || ''));
-    } else {
-      return repositorios;
-    }
-  };
-
-  // Função para atualizar a ordem de classificação
-  const handleOrdenacao = (novaOrdem) => {
-    setOrdem(novaOrdem);
   };
 
   return (
@@ -87,12 +65,6 @@ function BuscaUsuario() {
           <p>URL do Avatar: <img src={dadosUsuario.avatar_url} alt="Avatar do Usuário" /></p>
           <p>Email: {dadosUsuario.email || 'Não disponível'}</p>
           <p>Bio: {dadosUsuario.bio || 'Não disponível'}</p>
-          
-          <div>
-            <button onClick={() => handleOrdenacao('estrelas')}>Mais Estrelas</button>
-            <button onClick={() => handleOrdenacao('nome')}>Nome</button>
-            <button onClick={() => handleOrdenacao('linguagem')}>Linguagem</button>
-          </div>
 
           <h2>Repositórios do Usuário</h2>
           {dadosUsuario.repositorios && dadosUsuario.repositorios.map((repo) => (
