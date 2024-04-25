@@ -1,7 +1,6 @@
 
 
 import React, { useState } from 'react';
-import './BuscaUsuario.css';
 
 function BuscaUsuario() {
   const [nomeUsuario, setNomeUsuario] = useState('');
@@ -44,36 +43,36 @@ function BuscaUsuario() {
   };
 
   return (
-    <div className="busca-usuario-container">
-      <form onSubmit={handleSubmit} className="form-busca-usuario">
+    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', marginBottom: '20px' }}>
         <input
           type="text"
           placeholder="Digite o nome de usuário do GitHub"
           value={nomeUsuario}
           onChange={handleChange}
-          className="input-busca-usuario"
+          style={{ flex: '1', padding: '10px', fontSize: '16px' }}
         />
-        <button type="submit" disabled={carregando} className="btn-busca-usuario">Buscar</button>
+        <button type="submit" disabled={carregando} style={{ padding: '10px 20px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '5px', fontSize: '16px', cursor: 'pointer' }}>Buscar</button>
       </form>
       {carregando && <p>Carregando...</p>}
-      {erro && <p className="erro-msg">{erro}</p>}
+      {erro && <p style={{ color: 'red' }}>{erro}</p>}
       {dadosUsuario && (
-        <div className="dados-usuario-container">
+        <div style={{ marginTop: '20px' }}>
           <h2>Dados do Usuário</h2>
-          <div className="dados-usuario">
+          <div style={{ backgroundColor: '#f5f5f5', padding: '20px', borderRadius: '5px' }}>
             <p><strong>Nome de Usuário:</strong> {dadosUsuario.login}</p>
             <p><strong>Nome:</strong> {dadosUsuario.name}</p>
             <p><strong>Seguidores:</strong> {dadosUsuario.followers}</p>
             <p><strong>Seguindo:</strong> {dadosUsuario.following}</p>
-            <p><strong>URL do Avatar:</strong> <img src={dadosUsuario.avatar_url} alt="Avatar do Usuário" className="avatar-usuario" /></p>
+            <p><strong>URL do Avatar:</strong> <img src={dadosUsuario.avatar_url} alt="Avatar do Usuário" style={{ maxWidth: '100px', borderRadius: '50%', marginBottom: '10px' }} /></p>
             <p><strong>Email:</strong> {dadosUsuario.email || 'Não disponível'}</p>
             <p><strong>Bio:</strong> {dadosUsuario.bio || 'Não disponível'}</p>
           </div>
 
           <h2>Repositórios do Usuário</h2>
-          <div className="repositorios-usuario">
+          <div>
             {dadosUsuario.repositorios && dadosUsuario.repositorios.map((repo) => (
-              <div key={repo.id} className="repo-item">
+              <div key={repo.id} style={{ borderBottom: '1px solid #ccc', marginBottom: '10px', paddingBottom: '10px' }}>
                 <p><strong>Nome do Repositório:</strong> {repo.name}</p>
                 <p><strong>Descrição:</strong> {repo.description || 'Sem descrição'}</p>
                 <p><strong>Número de Estrelas:</strong> {repo.stargazers_count}</p>
