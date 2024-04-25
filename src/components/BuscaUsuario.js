@@ -1,7 +1,7 @@
 
 
 import React, { useState } from 'react';
-
+import './componets/BuscaUsuario.css';
 function BuscaUsuario() {
   const [nomeUsuario, setNomeUsuario] = useState('');
   const [dadosUsuario, setDadosUsuario] = useState(null);
